@@ -46,8 +46,7 @@ def main():
                 if event.key == pygame.K_r:
                     pistole.reload()
                 if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
+                    GameOver == True
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_s or event.key == pygame.K_w:
@@ -57,13 +56,19 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pistole.fire(player.rect.center, mainGroup, bulletGroup)
-                    
+
+            if event.type == pygame.QUIT:
+                GameOver = True
+                
         screen.fill((0, 100, 0))
         screen.blit(ammoStatus.display('Ammo: '+str(pistole.bullets)+'/7'), (10, 0))
         pygame.sprite.groupcollide(bulletGroup, enemyGroup, dokilla=True, dokillb=True)
         mainGroup.update()
         mainGroup.draw(screen)
         pygame.display.update()
+
+    pygame.quit()
+    sys.exit()
     
 if __name__ == '__main__':
     main()
