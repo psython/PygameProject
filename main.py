@@ -46,7 +46,7 @@ def main():
                 if event.key == pygame.K_r:
                     pistole.reload()
                 if event.key == pygame.K_ESCAPE:
-                    GameOver == True
+                    GameOver = True
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_s or event.key == pygame.K_w:
