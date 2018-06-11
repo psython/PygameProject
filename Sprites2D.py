@@ -13,7 +13,11 @@ class Object_2D(pygame.sprite.Sprite):
         self.rect.x = spawnPoint[0]
         self.rect.y = spawnPoint[1]
         self.spawnPoint = spawnPoint
-        
+
+    def load_image(self, imagePath):
+        self.image = pygame.image.load(imagePath).convert_alpha()
+        return self.image
+    
 class Bullet(Object_2D):
     
     def __init__(self, spawnPoint, size, color):
@@ -31,7 +35,7 @@ class Enemy(Object_2D):
         Object_2D.__init__(self, spawnPoint, size, color)
 
     def update(self):
-        self.rect.x -= 1
+        self.rect.x -= 3
         if self.rect.x < 0:
             self.kill()
 
@@ -39,7 +43,8 @@ class Player(Object_2D):
 
     def __init__(self, spawnPoint, size, color):
         Object_2D.__init__(self, spawnPoint, size, color)
-        self.speed = 5
+        self.speed = 10
+        self.health = 5
         self.x_direction = 0
         self.y_direction = 0
 

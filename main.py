@@ -1,5 +1,5 @@
 import pygame
-import sys
+import sys, os
 import random
 
 from Sprites2D import *
@@ -13,9 +13,13 @@ def main():
     pygame.init()  
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     mainClock = pygame.time.Clock()
-    player = Player((0, 0), [64, 64], BLUE)
+    player = Player((0, 0), [128, 128], BLUE)
+    player.load_image('player.png')
     pistole = Pistole()
     ammoStatus = Text()
+    reloadingText = Text()
+
+    background = pygame.image.load('background.png').convert()
     
     mainGroup = pygame.sprite.Group()
     enemyGroup = pygame.sprite.Group()
@@ -27,9 +31,10 @@ def main():
 
         mainClock.tick(60)
         if not enemyGroup.sprites():
-            for i in range(1, 10):
-                enemy = Enemy((random.randrange(SCREEN_WIDTH, SCREEN_WIDTH+400), random.randrange(0, SCREEN_HEIGHT-10)),
-                              [64, 64], RED)
+            for i in range(1, 6):
+                enemy = Enemy((random.randrange(SCREEN_WIDTH, SCREEN_WIDTH+400), random.randrange(0, SCREEN_HEIGHT-128)),
+                              [128, 128], RED)
+                enemy.load_image('zombie.png')
                 mainGroup.add(enemy)
                 enemyGroup.add(enemy)
                 
@@ -55,16 +60,17 @@ def main():
                     player.x_direction = 0
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pistole.fire(player.rect.center, mainGroup, bulletGroup)
+                pistole.fire(player.rect.topright, mainGroup, bulletGroup)
 
             if event.type == pygame.QUIT:
                 GameOver = True
                 
         screen.fill((0, 100, 0))
-        screen.blit(ammoStatus.display('Ammo: '+str(pistole.bullets)+'/7'), (10, 0))
+        screen.blit(background, (0,0))
         pygame.sprite.groupcollide(bulletGroup, enemyGroup, dokilla=True, dokillb=True)
         mainGroup.update()
         mainGroup.draw(screen)
+        screen.blit(ammoStatus.display('Ammo: '+str(pistole.bullets)+'/12'), (10, 0))
         pygame.display.update()
 
     pygame.quit()

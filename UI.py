@@ -8,4 +8,4 @@ class Text(object):
         self.font = pygame.font.SysFont('comicsansms', 50)
 
     def display(self, text):
-        return self.font.render(text, True, BLACK)
+        return self.font.render(text, True, WHITE)
